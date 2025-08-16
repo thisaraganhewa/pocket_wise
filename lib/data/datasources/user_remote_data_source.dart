@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class UserRemoteDataSource {
 
-  Future<User> logOrRegister();
+  Future<User?> logOrRegister();
 
 }
 
@@ -15,8 +15,19 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<User> logOrRegister() async{
+  Future<User?> logOrRegister() async{
     
+    try{
+      //initialize
+      await _googleSignIn.initialize();
+
+      
+
+    }
+     catch (e) {
+      print("Google Sign-In error: $e");
+      return null;
+    }
 
   }
 
