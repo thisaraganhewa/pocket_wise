@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,14 +14,24 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn  _googleSignIn = GoogleSignIn.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String? clientId;
+  String? serverClientId;
 
   @override
   Future<User?> logOrRegister() async{
     
     try{
-      //initialize
-      await _googleSignIn.initialize();
 
+      final GoogleSignInAccount? googleUser;
+
+      unawaited(_googleSignIn.initialize(
+        clientId: clientId,
+        serverClientId: serverClientId
+      ).then((_){
+        _googleSignIn.authenticationEvents
+          .listen()
+          .onError();
+      }));
       
 
     }
@@ -30,5 +41,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource{
     }
 
   }
+
+  
 
 }
