@@ -14,24 +14,53 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final firebaseOptions = DefaultFirebaseOptions.currentPlatform;
+  late final GoogleSignInAccount? googleUser;
+  bool _isAuthorized = false;
+  String _contactText = '';
+  String _errorMessage = '';
+  String _serverAuthCode = '';
+  final List<String> scopes = <String>[
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ];
 
   @override
   Future<User?> logOrRegister() async {
     String? clientId = firebaseOptions.iosClientId;
     String? serverClientId = firebaseOptions.iosClientId;
     try {
-      final GoogleSignInAccount? googleUser;
-
       unawaited(
         _googleSignIn
             .initialize(clientId: clientId, serverClientId: serverClientId)
             .then((_) {
               _googleSignIn.authenticationEvents.listen().onError();
+              _googleSignIn.attemptLightweightAuthentication();
             }),
       );
     } catch (e) {
       print("Google Sign-In error: $e");
       return null;
     }
+  }
+
+  Future<void> _handleAuthenticationEvent(
+    GoogleSignInAuthenticationEvent event,
+  ) async {
+    final GoogleSignInAccount? user = switch (event) {
+      GoogleSignInAuthenticationEventSignIn() => event.user,
+      GoogleSignInAuthenticationEventSignOut() => null,
+    };
+
+    final GoogleSignInClientAuthorization? authorization = await user
+        ?.authorizationClient
+        .authorizationForScopes(scopes);
+
+    googleUser = user;
+    _isAuthorized = authorization != null;
+    _errorMessage = "";
+
+    if(googleUser != null && authorization != null){
+      
+    }
+
   }
 }
