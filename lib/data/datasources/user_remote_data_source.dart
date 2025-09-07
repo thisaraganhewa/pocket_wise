@@ -59,8 +59,19 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     _errorMessage = "";
 
     if(googleUser != null && authorization != null){
-      
+
     }
 
   }
+
+  Future<void> _handleAuthenticationError(Object e){
+    googleUser = null;
+    _isAuthorized = false;
+    _errorMessage = e is GoogleSignInException ? 
+  }
+
+  String _errorMessageFromSignInException(GoogleSignInException e){
+    
+  }
+
 }
