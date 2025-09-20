@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pocket_wise/firebase_options.dart';
+import 'package:http/http.dart' as http;
 
 abstract class UserRemoteDataSource {
   Future<User?> logOrRegister();
@@ -64,14 +66,34 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   }
 
-  Future<void> _handleAuthenticationError(Object e){
+  Future<void> _handleGetContact(GoogleSignInAccount user) async {
+    final Map<String, String>? headers = await user.authorizationClient.authorizationHeaders(scopes);//get relevent permission headers
+
+    if(headers == null){//if headers are null it just return
+      return;
+    }
+
+    final http.Response response = await http.get(
+      Uri.parse(
+        'https://people.googleapis.com/v1/people/me/connections'
+        '?requestMask.includeField=person.names',
+      ),
+      headers: headers,
+    );
+
+  }
+
+  Future<void> _handleAuthenticationError(Object e) async {
     googleUser = null;
     _isAuthorized = false;
-    _errorMessage = e is GoogleSignInException ? 
+    _errorMessage = e is GoogleSignInException ? _errorMessageFromSignInException(e) : "Uknown Error : $e";
   }
 
   String _errorMessageFromSignInException(GoogleSignInException e){
-    
+    return switch(e.code){
+      GoogleSignInExceptionCode.canceled => 'Sign In Canceled',
+      _ => 'GoogleSignInException ${e.code}: ${e.description}'
+    };
   }
 
 }
