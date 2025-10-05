@@ -60,16 +60,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     _isAuthorized = authorization != null;
     _errorMessage = "";
 
-    if(googleUser != null && authorization != null){
-
-    }
-
+    if (googleUser != null && authorization != null) {}
   }
 
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
-    final Map<String, String>? headers = await user.authorizationClient.authorizationHeaders(scopes);//get relevent permission headers
+    final Map<String, String>? headers = await user.authorizationClient
+        .authorizationHeaders(scopes); //get relevent permission headers
 
-    if(headers == null){//if headers are null it just return
+    if (headers == null) {
+      //if headers are null it just return
       return;
     }
 
@@ -80,20 +79,30 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       ),
       headers: headers,
     );
-
   }
 
   Future<void> _handleAuthenticationError(Object e) async {
     googleUser = null;
     _isAuthorized = false;
-    _errorMessage = e is GoogleSignInException ? _errorMessageFromSignInException(e) : "Uknown Error : $e";
+    _errorMessage = e is GoogleSignInException
+        ? _errorMessageFromSignInException(e)
+        : "Uknown Error : $e";
   }
 
-  String _errorMessageFromSignInException(GoogleSignInException e){
-    return switch(e.code){
+  String _errorMessageFromSignInException(GoogleSignInException e) {
+    return switch (e.code) {
       GoogleSignInExceptionCode.canceled => 'Sign In Canceled',
-      _ => 'GoogleSignInException ${e.code}: ${e.description}'
+      _ => 'GoogleSignInException ${e.code}: ${e.description}',
     };
   }
 
+  Future<void> _handleContact(GoogleSignInAccount user) async {
+    final Map<String, String>? headers = await user.authorizationClient
+        .authorizationHeaders(scopes);
+
+    if (headers == null) {
+      //handle authrixation failed events here
+      return;
+    }
+  }
 }
