@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -101,8 +102,40 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         .authorizationHeaders(scopes);
 
     if (headers == null) {
-      //handle authrixation failed events here
+      //handle authrization failed events here
       return;
     }
+
+    //get the list of people like contacts
+    final http.Response response = await http.get(
+      Uri.parse(
+        'https://people.googleapis.com/v1/people/me/connections'
+        '?requestMask.includeField=person.names',
+      ),
+      headers: headers,
+    );
+
+    if (response.statusCode != 200) {
+      if (response.statusCode == 401 || response.statusCode == 403) {
+        _isAuthorized = false;//if responce status not qualse to 200 and the status code is 401 or 403 is authorization will be set to false
+        _errorMessage =
+            'People API gave a ${response.statusCode} response. '
+            'Please re-authorize access.';//assign thses message to error message after the request is failed
+      } else {
+        print('People API ${response.statusCode} response: ${response.body}');//if there is status code other than 401 or 403 .. like 500 this section will 
+        _contactText =
+            'People API gave a ${response.statusCode} '
+            'response. Check logs for details.';
+      }
+      return;
+    }
+    final Map<String, dynamic> data =
+        json.decode(response.body) as Map<String, dynamic>;
+
+    //fill the rest after _pickFIrstNameContact() method implememted
+    
   }
+
+  String? _pickFirstNameContact()
+
 }
