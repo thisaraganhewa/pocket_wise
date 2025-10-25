@@ -132,10 +132,30 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     final Map<String, dynamic> data =
         json.decode(response.body) as Map<String, dynamic>;
 
-    //fill the rest after _pickFIrstNameContact() method implememted
-    
+    final String? namedContact = _pickFirstNameContact(data);//gets the first name of the contacts
+
+    if(namedContact != null){//if the name is null shows no contacts founf if not it ll show the contact
+      _contactText = 'I see you know $namedContact!';
+    }
+    else{
+      _contactText = 'No contacts to display.';
+    }
   }
 
-  String? _pickFirstNameContact()
+  String? _pickFirstNameContact(Map<String, dynamic> data){
+    final List<dynamic>? connections = data['connections'] as List<dynamic>?;
+    final Map<String, dynamic>? contact = connections?.firstWhere((dynamic contact) => (contact as Map<Object?, dynamic>)['names'] != null, orElse: () => null,) as Map<String, dynamic>?;
+
+    if(contact != null){
+      final List<dynamic> names = contact['names'] as List<dynamic>;
+      final Map<String, dynamic>? name = names.firstWhere((dynamic name) => (name as Map<Object?, dynamic>)['displayName'] != null, orElse: () => null) as Map<String, dynamic>?;
+
+      if(name != null){
+        return name['displayName'] as String?;
+      }
+
+    } 
+    return null;
+  }
 
 }
