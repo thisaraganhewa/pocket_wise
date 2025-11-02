@@ -204,4 +204,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       _errorMessage = _errorMessageFromSignInException(e);
     }
   }
+
+  Future<void> _handleSignOut() async {
+    await GoogleSignIn.instance.disconnect();
+  }
+
 }
