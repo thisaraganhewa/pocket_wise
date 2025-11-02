@@ -143,7 +143,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   String? _pickFirstNameContact(Map<String, dynamic> data){
-    final List<dynamic>? connections = data['connections'] as List<dynamic>?;
+    final List<dynamic>? connections = data['connections'] as List<dynamic>?;//extract the connection list which have the contacts from the JSON
     final Map<String, dynamic>? contact = connections?.firstWhere((dynamic contact) => (contact as Map<Object?, dynamic>)['names'] != null, orElse: () => null,) as Map<String, dynamic>?;
 
     if(contact != null){
@@ -157,5 +157,21 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } 
     return null;
   }
+
+  Future<void> _handleAuthorizationScopes(GoogleSignInAccount user) async {
+    try{
+      final GoogleSignInClientAuthorization? authorization = await user.authorizationClient.authorizationForScopes(scopes);
+
+      authorization;
+
+      _isAuthorized = true;
+      _errorMessage = '';
+    }
+    on GoogleSignInException catch(e){
+      _errorMessage = _errorMessageFromSignInException(e);
+    }
+    
+  }
+  
 
 }
