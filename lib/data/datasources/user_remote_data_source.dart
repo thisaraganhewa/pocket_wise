@@ -35,7 +35,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         _googleSignIn
             .initialize(clientId: clientId, serverClientId: serverClientId)
             .then((_) {
-              _googleSignIn.authenticationEvents.listen().onError();
+              _googleSignIn.authenticationEvents.listen(_handleAuthenticationEvent).onError(_handleAuthenticationError);
               _googleSignIn.attemptLightweightAuthentication();
             }),
       );
