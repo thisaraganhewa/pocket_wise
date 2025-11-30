@@ -9,7 +9,7 @@ import 'package:pocket_wise/firebase_options.dart';
 import 'package:http/http.dart' as http;
 
 abstract class UserRemoteDataSource {
-  Future<User?> logOrRegister();
+  Future<bool> logOrRegister();
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -27,7 +27,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   ];
 
   @override
-  Future<User?> logOrRegister() async {
+  Future<bool> logOrRegister() async {
     String? clientId = firebaseOptions.iosClientId;
     String? serverClientId = firebaseOptions.iosClientId;
     try {
@@ -41,7 +41,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       );
     } catch (e) {
       print("Google Sign-In error: $e");
-      return null;
+      return _isAuthorized;
+    }
+    finally{
+      return _isAuthorized;
     }
   }
 
