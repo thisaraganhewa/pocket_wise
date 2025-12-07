@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pocket_wise/domain/usecases/user.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+
+  final User _userUseCase;
+
+  LoginPage(this._userUseCase);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -14,7 +18,9 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(onPressed: (){}, child: Text("Log in With Google"))
+          ElevatedButton(onPressed: (){
+            widget._userUseCase.logOrRegister();
+          }, child: Text("Log in With Google"))
         ],
       ),
     );
