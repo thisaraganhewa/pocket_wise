@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pocket_wise/domain/usecases/user.dart';
 
 class LoginPage extends StatefulWidget {
 
-  final User _userUseCase;
+  User _userUseCase =GetIt.I<User>();
 
-  LoginPage(this._userUseCase);
+  LoginPage();
 
   @override
   State<LoginPage> createState() => _LoginPageState();

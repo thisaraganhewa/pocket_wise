@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pocket_wise/core/di/injection_container.dart' as di;
 import 'package:pocket_wise/firebase_options.dart';
 import 'package:pocket_wise/presentation/pages/home_page.dart';
 import 'package:pocket_wise/presentation/pages/login_page.dart';
@@ -9,6 +10,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await di.init();
   runApp(const MyApp());
 }
 
