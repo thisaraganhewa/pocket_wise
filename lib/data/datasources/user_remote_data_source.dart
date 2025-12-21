@@ -28,6 +28,11 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<bool> logOrRegister() async {
+     await GoogleSignIn.instance.authenticate();
+     return true;
+  }
+
+  Future<bool> checkAuthentication() async{
     String? clientId = firebaseOptions.iosClientId;
     String? serverClientId = firebaseOptions.iosClientId;
     try {
@@ -46,7 +51,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     finally{
       return _isAuthorized;
     }
-  }
+  } 
+
 
   Future<void> _handleAuthenticationEvent(
     GoogleSignInAuthenticationEvent event,

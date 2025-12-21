@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pocket_wise/domain/usecases/user.dart';
@@ -19,7 +20,11 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(onPressed: (){
+          kIsWeb 
+          ? ElevatedButton(onPressed: (){
+            widget._userUseCase.logOrRegister();
+          }, child: Text("Log in With Google"))
+          : ElevatedButton(onPressed: (){
             widget._userUseCase.logOrRegister();
           }, child: Text("Log in With Google"))
         ],
