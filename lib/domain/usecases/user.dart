@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pocket_wise/data/datasources/user_remote_data_source.dart';
+import 'package:pocket_wise/domain/repositories/user_repository.dart';
+
 
 class User {
 
-  final UserRemoteDataSourceImpl _userRepository;
+  final UserRepository _userRepository;
 
   User(this._userRepository);
 

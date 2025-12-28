@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pocket_wise/domain/usecases/user.dart';
 
+
 class LoginPage extends StatefulWidget {
 
   User _userUseCase =GetIt.I<User>();
@@ -20,11 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          kIsWeb 
-          ? ElevatedButton(onPressed: (){
-            widget._userUseCase.logOrRegister();
-          }, child: Text("Log in With Google"))
-          : ElevatedButton(onPressed: (){
+          ElevatedButton(onPressed: (){
             widget._userUseCase.logOrRegister();
           }, child: Text("Log in With Google"))
         ],
