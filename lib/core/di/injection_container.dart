@@ -10,6 +10,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async{
 
+  sl.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl());
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
   sl.registerLazySingleton<User>(() => User(sl()));
 
