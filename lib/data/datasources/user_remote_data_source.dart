@@ -13,11 +13,45 @@ abstract class UserRemoteDataSource {
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
-  
+  final _googleSignIn = GoogleSignIn.instance;
+  bool _isGoogleSignInInitialized = false;
+
   @override
   Future<bool> logOrRegister() async {
-     return true;
+    _initializeGoogleSignIn();
+    return _isGoogleSignInInitialized;
   }
 
+  Future<void> _initializeGoogleSignIn() async {
+    try{
+      await _googleSignIn.initialize();
+      _isGoogleSignInInitialized = true;
+    }
+    catch(e){
+      print('Failed to initialize Google Sign-In: $e');
+    }
+  }
+
+  Future<void> _ensureGoogleSignInInitialized() async {
+    if(!_isGoogleSignInInitialized){
+      await _initializeGoogleSignIn();
+    }
+  }
+
+  Future<GoogleSignInAccount> signInWithGoogle() async {
+    await _ensureGoogleSignInInitialized(); 
+
+    try{
+      final GoogleSignInAccount  account = await _googleSignIn.authenticate(
+        scopeHint: ['email'],
+      );
+      return account;
+    }
+    catch(e){
+      print('Unexpected Google Sign In Error: $e ');
+      rethrow;
+    }
+
+  }
 
 }
