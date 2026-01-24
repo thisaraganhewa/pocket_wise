@@ -54,4 +54,27 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   }
 
+
+  Future<GoogleSignInAccount?> attemptSilentSignIn() async {
+    await _ensureGoogleSignInInitialized();
+
+    try{
+      final result = _googleSignIn.attemptLightweightAuthentication();
+
+      if(result is Future<GoogleSignInAccount?>){
+        return await result;
+      }
+      else{
+        return result as GoogleSignInAccount;
+      }
+
+
+    }
+    catch(e){
+      print('Silent Sign in Failed : $e');
+      return null;
+    }
+
+  }
+
 }
