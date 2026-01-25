@@ -55,6 +55,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
 
+  //Handle Silent Authentication
   Future<GoogleSignInAccount?> attemptSilentSignIn() async {
     await _ensureGoogleSignInInitialized();
 
@@ -76,5 +77,35 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     }
 
   }
+
+  GoogleSignInAuthentication getAuthTokens(GoogleSignInAccount account){
+    return account.authentication;
+  }
+
+
+  Future<String?> getAccessTokenForScope(List<String> scopes) async {
+
+    await _ensureGoogleSignInInitialized();
+
+    try{
+      final authClient = _googleSignIn.authorizationClient;
+
+      var authorization = await authClient.authorizationForScopes(scopes);
+
+      if(authorization == null){
+        authorization = await authClient.authorizeScopes(scopes);
+      }
+
+      return authorization?.accessToken;
+
+    }
+    catch(e){
+      print('failed to get the access token for scopes : $e');
+      return null;
+    }
+
+  }
+
+
 
 }
