@@ -15,6 +15,10 @@ abstract class UserRemoteDataSource {
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final _googleSignIn = GoogleSignIn.instance;
   bool _isGoogleSignInInitialized = false;
+  GoogleSignInAccount? _currentUser;
+  GoogleSignInAccount? get currentUser => _currentUser;
+
+  bool get isSignedIn => _currentUser != null;  
 
   @override
   Future<bool> logOrRegister() async {
@@ -83,6 +87,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
 
+// Scope Management
   Future<String?> getAccessTokenForScope(List<String> scopes) async {
 
     await _ensureGoogleSignInInitialized();
@@ -104,6 +109,24 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       return null;
     }
 
+  }
+
+  Future<void> signIn() async {
+    try{
+      _currentUser = await signInWithGoogle();
+      
+    }
+    catch(e)
+    {
+      _currentUser = null;
+      rethrow;
+    }
+  }
+
+
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
+    
   }
 
 
