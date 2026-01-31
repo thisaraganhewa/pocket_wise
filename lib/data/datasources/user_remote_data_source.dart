@@ -129,6 +129,27 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     
   }
 
+  Future<UserCredential> signUpWithGoogleFirebase() async {
+    
+    await _ensureGoogleSignInInitialized();
+
+    final GoogleSignInAccount googleUser = await _googleSignIn.authenticate(
+      scopeHint: ['email'],
+    );
+
+    final authClient = _googleSignIn.authorizationClient;
+    final authorization = await authClient.authorizationForScopes(['email']);
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: authorization?.accessToken,
+      idToken: googleAuth.idToken
+    );
+
+    
+
+  }
+
 
 
 }
