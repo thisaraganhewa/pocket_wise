@@ -146,7 +146,11 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       idToken: googleAuth.idToken
     );
 
-    
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    _currentUser = googleUser;
+
+    return userCredential;
 
   }
 
