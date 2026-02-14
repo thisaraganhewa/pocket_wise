@@ -9,28 +9,25 @@ import 'package:pocket_wise/firebase_options.dart';
 import 'package:http/http.dart' as http;
 
 abstract class UserRemoteDataSource {
-  final FirebaseAuth auth;
-  final GoogleSignIn googleSignIn;
-
-  UserRemoteDataSource({
-    this.auth,
-    this.googleSignIn
-  })
-
   Future<bool> logOrRegister();
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
-  
- 
+  final FirebaseAuth auth;
+  final GoogleSignIn googleSignIn;
+
+  UserRemoteDataSourceImpl({
+    required this.auth,
+    required this.googleSignIn
+  });
 
   @override
   Future<bool> logOrRegister() async {
-    _initializeGoogleSignIn();
-    return _isGoogleSignInInitialized;
+    try{
+      final GoogleSignInAccount googleUser = await googleSignIn.signIn()
+    }
+    catch(e){
+      throw Exception("Google log in failed in user_remote_data_source: $e");
+    }
   }
-
-  
-
-
 }
