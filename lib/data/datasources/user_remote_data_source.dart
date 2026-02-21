@@ -13,21 +13,36 @@ abstract class UserRemoteDataSource {
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
-  final FirebaseAuth auth;
-  final GoogleSignIn googleSignIn;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  UserRemoteDataSourceImpl({
-    required this.auth,
-    required this.googleSignIn
-  });
+
+  UserRemoteDataSourceImpl();
 
   @override
   Future<bool> logOrRegister() async {
-    try{
-      final GoogleSignInAccount googleUser = await googleSignIn.signIn()
-    }
-    catch(e){
-      throw Exception("Google log in failed in user_remote_data_source: $e");
-    }
+    return true;
   }
+
+  signInWithGoogle() async {
+
+    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+
+    if(gUser == null) return;
+
+    final GoogleSignInAuthentication gAuth  = await gUser!.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: gAuth.accessToken,
+      idToken: gAuth.idToken
+    );
+
+    return await _firebaseAuth.signInWithCredential(credential);
+
+  }
+
+
+  User? getCurrentUser(){
+    return _firebaseAuth.currentUser;
+  }
+
 }
