@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 abstract class UserRemoteDataSource {
   Future<UserEntity?> signInWithGoogle();
-  User? getCurrentUser();
+  UserEntity? getCurrentUser();
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -34,13 +34,34 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       idToken: gAuth.idToken
     );
 
-    return await _firebaseAuth.signInWithCredential(credential);
+    final UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
+
+    final User? fireBaseUser = userCredential.user;
+
+    if(fireBaseUser == null) return null;
+
+    return UserEntity(
+      uid: fireBaseUser.uid,
+      email: fireBaseUser.email,
+      name: fireBaseUser.displayName,
+      photoUrl: fireBaseUser.photoURL
+    );
 
   }
 
 
-  User? getCurrentUser(){
-    return _firebaseAuth.currentUser;
+  UserEntity? getCurrentUser(){
+    final user = _firebaseAuth.currentUser;
+
+    if(user == null) return null;
+
+    return UserEntity(
+      uid: user.uid,
+      email: user.email,
+      name: user.displayName,
+      photoUrl: user.photoURL
+    );
+
   }
 
 }
