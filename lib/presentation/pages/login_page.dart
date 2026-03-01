@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pocket_wise/domain/usecases/user.dart';
+import 'package:pocket_wise/domain/usecases/sign_in_with_google_use_case.dart';
 
 
 class LoginPage extends StatefulWidget {
 
-  User _userUseCase =GetIt.I<User>();
+  SignInWithGoogleUseCase _userUseCase =GetIt.I<SignInWithGoogleUseCase>();
 
   LoginPage();
 
