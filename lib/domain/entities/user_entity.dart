@@ -6,9 +6,9 @@ class UserEntity {
 
   UserEntity({
     required this.uid,
-    this.email,
-    this.name,
-    this.photoUrl
+    required this.email,
+    required this.name,
+    required this.photoUrl
   });
 
 }
