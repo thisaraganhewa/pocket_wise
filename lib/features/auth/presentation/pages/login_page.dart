@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pocket_wise/domain/usecases/sign_in_with_google_use_case.dart';
+import 'package:pocket_wise/features/auth/domain/usecases/sign_in_with_google_use_case.dart';
 
 
 class LoginPage extends StatefulWidget {

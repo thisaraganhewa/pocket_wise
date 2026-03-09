@@ -1,6 +1,6 @@
-import 'package:pocket_wise/data/datasources/user_remote_data_source.dart';
-import 'package:pocket_wise/domain/entities/user_entity.dart';
-import 'package:pocket_wise/domain/repositories/user_repository.dart';
+import 'package:pocket_wise/features/auth/data/datasources/user_remote_data_source.dart';
+import 'package:pocket_wise/features/auth/domain/entities/user_entity.dart';
+import 'package:pocket_wise/features/auth/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
 

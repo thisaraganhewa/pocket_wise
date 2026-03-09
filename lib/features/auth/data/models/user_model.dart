@@ -1,4 +1,4 @@
-import 'package:pocket_wise/domain/entities/user_entity.dart';
+import 'package:pocket_wise/features/auth/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
   UserModel({
