@@ -13,9 +13,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInWithGoogleUseCase signInWithGoogleUseCase;
 
   AuthBloc(this.signInWithGoogleUseCase) : super(AuthInitial())  {
-    on<SignInWithGoogleEvent>((event, emit) async {
+    on<SignInWithGoogleEvent>(_onGoogleSignIn);
+  }
 
-      emit(AuthLoading());
+  Future<void> _onGoogleSignIn(
+    SignInWithGoogleEvent event,
+    Emitter<AuthState> emit
+  ) async {
+     emit(AuthLoading());
 
       try{
         final user = await signInWithGoogleUseCase.logOrRegister();
@@ -26,6 +31,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       catch(e){
         emit(AuthError(e.toString()));
       }
-    });
   }
+
 }
