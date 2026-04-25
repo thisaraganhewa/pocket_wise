@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBloc>(create: (_) => AuthBloc(SignInWithGoogleUseCase(di.sl())))
+        BlocProvider<AuthBloc>(create: (_) => AuthBloc(di.sl<SignInWithGoogleUseCase>()))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

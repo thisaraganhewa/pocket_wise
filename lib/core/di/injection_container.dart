@@ -16,7 +16,7 @@ Future<void> init() async{
   sl.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSourceImpl());
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
   sl.registerLazySingleton<SignInWithGoogleUseCase>(() => SignInWithGoogleUseCase(sl()));
-  sl.registerLazySingleton(() => SignInWithGoogleUseCase(sl()));
+  //sl.registerLazySingleton(() => SignInWithGoogleUseCase(sl()));
   
 
 }
