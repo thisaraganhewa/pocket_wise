@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pocket_wise/features/auth/domain/usecases/sign_in_with_google_use_case.dart';
+import 'package:pocket_wise/features/auth/presentation/bloc/auth_bloc.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -18,14 +20,37 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(onPressed: (){
-            widget._userUseCase.logOrRegister();
-          }, child: Text("Log in With Google"))
-        ],
-      ),
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state){
+          if(state is AuthSuccess){
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Welcome ${state.user.name}"))
+            );
+          }
+
+          if(state is AuthError){
+             ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message))
+            );
+          }
+        }, 
+        builder: (context, state){
+          if(state is AuthLoading){
+            return Center(child: CircularProgressIndicator());
+          }
+
+          return Center(
+            child: ElevatedButton(
+              onPressed: (){
+                context.read<AuthBloc>().add(SignInWithGoogleEvent());
+              }, 
+              child: const Text("Log in With Google")
+              ),
+          );
+
+        }
+      
+      )
     );
   }
 }
