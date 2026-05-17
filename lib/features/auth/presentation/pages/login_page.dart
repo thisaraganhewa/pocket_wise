@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pocket_wise/features/auth/domain/usecases/sign_in_with_google_use_case.dart';
 import 'package:pocket_wise/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pocket_wise/features/dashboard/presentation/pages/dashboard_page.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -26,6 +27,8 @@ class _LoginPageState extends State<LoginPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Welcome ${state.user.name}"))
             );
+
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => DashboardPage()));
           }
 
           if(state is AuthError){
