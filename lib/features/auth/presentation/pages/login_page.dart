@@ -1,17 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:pocket_wise/features/auth/domain/usecases/sign_in_with_google_use_case.dart';
 import 'package:pocket_wise/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pocket_wise/features/dashboard/presentation/pages/dashboard_page.dart';
 
 
 class LoginPage extends StatefulWidget {
 
-  SignInWithGoogleUseCase _userUseCase =GetIt.I<SignInWithGoogleUseCase>();
 
-  LoginPage();
+  const LoginPage();
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -24,6 +20,9 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state){
           if(state is AuthSuccess){
+
+            if (!context.mounted) return;
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Welcome ${state.user.name}"))
             );
@@ -32,6 +31,9 @@ class _LoginPageState extends State<LoginPage> {
           }
 
           if(state is AuthError){
+
+            if (!context.mounted) return;
+
              ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message))
             );
@@ -43,12 +45,16 @@ class _LoginPageState extends State<LoginPage> {
           }
 
           return Center(
-            child: ElevatedButton(
-              onPressed: (){
-                context.read<AuthBloc>().add(SignInWithGoogleEvent());
-              }, 
-              child: const Text("Log in With Google")
-              ),
+            child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: (){
+                    context.read<AuthBloc>().add(SignInWithGoogleEvent());
+                  }, 
+                  child: const Text("Log in With Google")
+                  ),
+              ],
+            ),
           );
 
         }
