@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColors {
   AppColors._();
 
@@ -7,5 +9,6 @@ class AppColors {
   static const Color secondary = Color(0xFF0EA5E9);
   static const Color tertiary = Color(0xFF8b5cf6);
   static const Color neutral = Color(0xFF0f172a);
+  static const Color surface = Colors.white;
 
 }
