@@ -46,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
 
           return Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: (){
