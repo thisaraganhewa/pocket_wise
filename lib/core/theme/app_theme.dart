@@ -5,48 +5,45 @@ import 'package:pocket_wise/core/theme/app_text_styles.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get lightTheme{
+  static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
 
       fontFamily: 'HankenGrotesk',
 
-      colorScheme: const ColorScheme.light(
+      brightness: Brightness.dark,
+
+      scaffoldBackgroundColor: AppColors.background,
+
+      colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
-        secondary: AppColors.secondary,
-        tertiary: AppColors.tertiary,
-        surface: AppColors.surface,
-        onSurface: AppColors.neutral, 
-
+        onPrimary: Colors.white,
+        error: AppColors.error,
+        surface: AppColors.surfaceContainer,
+        onSurface: AppColors.textPrimary,
       ),
-
-      scaffoldBackgroundColor: Colors.white,
 
       textTheme: const TextTheme(
-        displayLarge: AppTextStyles.headlineXl,
-        displayMedium: AppTextStyles.headlineXlMobile,
-        titleLarge: AppTextStyles.headlineLg,
-        bodyLarge: AppTextStyles.bodyLg,
+        displayMedium: AppTextStyles.display,
+        headlineMedium: AppTextStyles.headline,
+        titleMedium: AppTextStyles.title,
+        bodyLarge: AppTextStyles.body,
+        labelMedium: AppTextStyles.label
       ),
 
-      appBarTheme: const AppBarTheme(
-        centerTitle: false,
+      cardTheme: CardThemeData(
+        color: AppColors.surfaceBright,
         elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: AppColors.neutral,
-      ),
-
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          textStyle: AppTextStyles.bodyLg.copyWith(
-            fontWeight: FontWeight.w600,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+          side: const BorderSide(
+            color: AppColors.border
           )
         )
-      )
+      ),
+
+      dividerColor: AppColors.border
 
     );
   }
-
 }
