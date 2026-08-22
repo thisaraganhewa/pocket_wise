@@ -6,7 +6,6 @@ import 'package:pocket_wise/core/theme/app_theme.dart';
 import 'package:pocket_wise/features/auth/domain/usecases/sign_in_with_google_use_case.dart';
 import 'package:pocket_wise/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pocket_wise/firebase_options.dart';
-import 'package:pocket_wise/features/auth/presentation/pages/home_page.dart';
 import 'package:pocket_wise/features/auth/presentation/pages/login_page.dart';
 
 void main() async {
@@ -30,7 +29,7 @@ class PocketWiseApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: AppTheme.lightTheme,
+        theme: AppTheme.darkTheme,
         home: LoginPage(),
       ),
     );

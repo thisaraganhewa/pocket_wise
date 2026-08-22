@@ -52,7 +52,10 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: (){
                     context.read<AuthBloc>().add(SignInWithGoogleEvent());
                   }, 
-                  child: const Text("Log in With Google")
+                  child: const Text(
+                    "Log in With Google",
+                    
+                    )
                   ),
               ],
             ),

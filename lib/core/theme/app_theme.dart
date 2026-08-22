@@ -5,7 +5,7 @@ import 'package:pocket_wise/core/theme/app_text_styles.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get lightTheme {
+  static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
 
