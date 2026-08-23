@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pocket_wise/features/auth/presentation/widgets/google_sign_in_button.dart';
 import 'package:pocket_wise/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pocket_wise/features/dashboard/presentation/pages/dashboard_page.dart';
 
@@ -48,15 +49,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: (){
-                    context.read<AuthBloc>().add(SignInWithGoogleEvent());
-                  }, 
-                  child: const Text(
-                    "Log in With Google",
-                    
-                    )
-                  ),
+                GoogleSignInButton(onPressed: (){context.read<AuthBloc>().add(SignInWithGoogleEvent());}),
               ],
             ),
           );
