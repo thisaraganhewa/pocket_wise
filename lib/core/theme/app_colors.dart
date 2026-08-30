@@ -7,7 +7,10 @@ class AppColors {
 
   //Brand
   static const Color primary = Color(0xFFFF00BF);
+
+  //background
   static const Color background = Color(0xFF0B1326);
+  static const Color backgroundGlow = Color(0xFFFF00BF);
 
   //Surface
   static const Color surfaceBright = Color(0xFF31394D);
