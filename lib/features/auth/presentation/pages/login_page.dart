@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pocket_wise/core/widgets/app_background.dart';
+import 'package:pocket_wise/core/widgets/gradient_background.dart';
 import 'package:pocket_wise/features/auth/presentation/widgets/google_sign_in_button.dart';
 import 'package:pocket_wise/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pocket_wise/features/dashboard/presentation/pages/dashboard_page.dart';
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppBackground(
+      body: GradientBackground(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state){
             if(state is AuthSuccess){

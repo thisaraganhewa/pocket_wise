@@ -11,6 +11,7 @@ class AppColors {
   //background
   static const Color background = Color(0xFF0B1326);
   static const Color backgroundGlow = Color(0xFFFF00BF);
+  static const Color tertiary = Color(0xFF3CDDC7);
 
   //Surface
   static const Color surfaceBright = Color(0xFF31394D);
