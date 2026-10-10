@@ -52,7 +52,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GoogleSignInButton(onPressed: (){context.read<AuthBloc>().add(SignInWithGoogleEvent());}),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 100),
+                    child: GoogleSignInButton(onPressed: (){context.read<AuthBloc>().add(SignInWithGoogleEvent());}),
+                  ),
                 ],
               ),
             );

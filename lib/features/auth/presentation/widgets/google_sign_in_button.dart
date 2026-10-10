@@ -11,7 +11,6 @@ class GoogleSignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
       height: 56,
       child: OutlinedButton(
         onPressed: onPressed,
